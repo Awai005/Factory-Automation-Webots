@@ -1,0 +1,233 @@
+#VRML_SIM R2023b utf8
+PROTO mybot [
+  field SFVec3f    translation  0 0 0
+  field SFRotation rotation     0 0 1 0
+  field SFFloat    bodyMass     1
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    children [
+
+    DEF BODY Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0.1 0.1
+        }
+      }
+      geometry Box {
+        size 0.3 0.135 0.075
+      }
+    }
+    Lidar {
+      translation 0.13125 0 0
+      children [
+        DEF LiDAR_box Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.0375 0.075 0.01875
+          }
+        }
+      ]
+      boundingObject USE LiDAR_box
+      physics Physics {
+      }
+      fieldOfView 3.14157
+      numberOfLayers 1
+      maxRange 2.5
+    }
+    GPS {
+      translation 0 0 0.03725
+      children [
+        DEF GPS_SHAPE Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.001
+            radius 0.005
+          }
+        }
+      ]
+      name "gpsCenter"
+      boundingObject USE GPS_SHAPE
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    GPS {
+      translation 0.126 0 0.03725
+      children [
+        DEF GPS_SHAPE Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.001
+            radius 0.005
+          }
+        }
+      ]
+      name "gpsFront"
+      boundingObject USE GPS_SHAPE
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2457.679742693602
+        axis 0 1 0
+        anchor 0.075 0 -0.0375
+      }
+      device [
+        RotationalMotor {
+          name "wheel1"
+        }
+      ]
+      endPoint DEF WHEEL1 Solid {
+        translation 0.0750382926384183 -0.08000039999999449 -0.03740829289098999
+        rotation -0.8071349393319476 -0.41760929323192025 0.41729566007322577 4.500565522401458
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0.847059 0.921569 0.0392157
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        boundingObject USE WHEEL
+        physics DEF WHEEL_PH Physics {
+          density -1
+          mass 0.75
+        }
+        linearVelocity -0.3629176055209319 0.14153121154941756 -0.00032115590131555404
+        angularVelocity -6.616185958562513 -7.499263134254553 2.268233791421852
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2458.0210244861037
+        axis 0 1 0
+        anchor -0.075 0 -0.0375
+      }
+      device [
+        RotationalMotor {
+          name "wheel2"
+        }
+      ]
+      endPoint DEF WHEEL2 Solid {
+        translation -0.0749121112085011 -0.08000048414998939 -0.03745498026217914
+        rotation -0.6826050972772428 -0.5169735600766446 0.5165158461778361 4.340252070894067
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0.847059 0.921569 0.0392157
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        name "solid1"
+        boundingObject USE WHEEL
+        physics DEF WHEEL_PH Physics {
+          density -1
+          mass 0.75
+        }
+        linearVelocity -0.19043752873574535 0.35914343061924825 -0.00025645877519241356
+        angularVelocity -6.6162130120185125 -7.499259868876542 2.2682195270183754
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2495.6555656897426
+        axis 0 1 0
+        anchor 0.075 0 -0.0375
+      }
+      device [
+        RotationalMotor {
+          name "wheel3"
+        }
+      ]
+      endPoint DEF WHEEL3 Solid {
+        translation 0.07486378187512936 0.0799992999999929 -0.03749750551473071
+        rotation -0.7069158151928631 -0.5002715550805354 0.4999984014049573 4.373236719366835
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0.847059 0.921569 0.0392157
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        name "solid2"
+        boundingObject USE WHEEL
+        physics DEF WHEEL_PH Physics {
+          density -1
+          mass 0.75
+        }
+        linearVelocity -0.11855058019098835 -0.06242018122157428 -0.0007458844668129435
+        angularVelocity 1.000307839042949 1.3578074043888466 1.8835743197768267
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2496.0597566271294
+        axis 0 1 0
+        anchor -0.075 0 -0.0375
+      }
+      device [
+        RotationalMotor {
+          name "wheel4"
+        }
+      ]
+      endPoint DEF WHEEL4 Solid {
+        translation -0.0749857223963607 0.07999809999999563 -0.03750278388834612
+        rotation 0.5524158318173992 0.5896425597722244 -0.5892014939413762 2.1315174243220403
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0.847059 0.921569 0.0392157
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        name "solid3"
+        boundingObject USE WHEEL
+        physics DEF WHEEL_PH Physics {
+          density -1
+          mass 0.75
+        }
+        linearVelocity 0.053566170492955686 0.15535953796007987 0.0002492753430202968
+        angularVelocity 1.0003095948179614 1.3578057795810732 1.8835741744974275
+      }
+    }
+    ]
+    name "robot2"
+    boundingObject USE BODY
+    physics Physics {
+      density -1
+      mass IS bodyMass
+    }
+    controller "Nav_control1"
+  }
+}
