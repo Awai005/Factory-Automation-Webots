@@ -1,7 +1,8 @@
 
 import math
 import csv
-
+from ekf import EKF
+import numpy as np
 
 #  - - - - - - - - - - - - - - - - - - - - - - - - - - - - Constants for grid setup
 ROWS, COLS = 80, 80
@@ -38,6 +39,10 @@ class RobotController:
         self.gps_sensors, self.gps_coordinates = self.initialize_gps()
         self.lidar = self.initialize_lidar()
         
+
+        self.ekf = EKF(dt=self.TIME_STEP/1000.0)
+
+
         self.max_speed = 3.0
         
         self.steady_speed = self.max_speed / 2
@@ -74,7 +79,22 @@ class RobotController:
     def acquire_gps_coordinates(self):
         for i in range(2):
             self.gps_coordinates[i] = self.gps_sensors[i].getValues()
+        gps_xy = np.array([self.gps_coordinates[1][0],
+                           self.gps_coordinates[1][1]])
+        self.ekf.update_gps(gps_xy)
         return self.gps_coordinates
+    
+
+    def odom_predict(self, omega):
+        self.ekf.predict(omega)
+
+    def calculate_robot_pose(self):
+        # Use EKF state instead of raw GPS
+        self.robot_pose = [self.ekf.x[0], self.ekf.x[1],
+                           np.degrees(self.ekf.x[2]) % 360]
+        return self.robot_pose
+
+
 
     def calculate_robot_pose(self):
         xCoordinateFront, yCoordinateFront = self.gps_coordinates[0][:2]
